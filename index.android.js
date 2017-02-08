@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import Application from './client/';
+import Application from './client';
 import {
   AppRegistry
 } from 'react-native';
