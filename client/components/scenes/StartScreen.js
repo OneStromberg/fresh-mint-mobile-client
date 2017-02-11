@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-
+import {bindActionCreators} from 'redux';
 import {Actions} from 'react-native-router-flux';
+
 import {
   StyleSheet,
   Text,
   Button,
   View
 } from 'react-native';
+
+import {connect} from 'react-redux';
 
 class StartScreen extends Component {
     onButtonPress(){
@@ -29,4 +32,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default StartScreen;
+const stateMap = (state, props, ownProps) => {
+    return {
+        switches: {ble : state.componentSettings.ble}
+    };
+};
+
+function mapDispatchToProps(dispatch) {
+    return {
+        routeSelect: bindActionCreators(analytics.routeClick, dispatch),
+        switchSelect: bindActionCreators(analytics.switchClick, dispatch)
+    };
+};
+
+export default connect(stateMap, mapDispatchToProps)(StartScreen);
