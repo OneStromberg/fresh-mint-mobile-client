@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import ble from './ble';
+import bluetooth from './bluetooth';
 
 const combinedReducers = combineReducers({
-    ble
+    bluetooth
 });
 
 export default combinedReducers;

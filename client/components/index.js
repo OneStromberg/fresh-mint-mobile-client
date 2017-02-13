@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import {Scene, Router, Actions} from 'react-native-router-flux';
-import {StartScreen, HardSettings} from './scenes';
+import {Scene, Router} from 'react-native-router-flux';
+import {StartScreen, HardSettings, DeviceInfo} from './scenes';
 import { Provider } from 'react-redux';
 
 import thunk from 'redux-thunk';
@@ -25,6 +25,7 @@ class MobileClient extends Component {
                         <Scene key="root">
                             <Scene key="startScreen" component={StartScreen} title="StartScreen"/>
                             <Scene key="hardSettings" component={HardSettings} title="HardSettings"/>
+                            <Scene key="deviceInfo" component={DeviceInfo} title="DeviceInfo"/>
                         </Scene>
                     </Router>
                 </Provider>

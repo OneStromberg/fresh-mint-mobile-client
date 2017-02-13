@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
-import {bindActionCreators} from 'redux';
-import {Actions} from 'react-native-router-flux';
-
+import React, {Component} from 'react';
 import {
-  StyleSheet,
-  Text,
-  Button,
-  View
+    View,
+    Button,
 } from 'react-native';
-
+import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
+import BleDeviceList from './../partials/BleDeviceList';
+import SettingsScreen from './../partials/SettingsScreen';
+import {bindActionCreators} from 'redux';
 
 class StartScreen extends Component {
-    onButtonPress(){
-        Actions.hardSettings();
+    constructor() {
+        super()
+    }
+    onConnectDevice() {
+        Actions.deviceInfo();
     }
     render() {
-        return <View style={styles.container}>
-                    <Text>Start Screen</Text>
-                    <Button onPress={this.onButtonPress} title="Hard Settings"/>
-                </View>
+        return (
+            <View style={styles.container}>
+                <Button title='Device' onPress={this.onConnectDevice}/>
+            </View>
+        );
     }
 }
 
@@ -32,17 +34,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const stateMap = (state, props, ownProps) => {
-    return {
-        switches: {ble : state.componentSettings.ble}
-    };
-};
-
-function mapDispatchToProps(dispatch) {
-    return {
-        routeSelect: bindActionCreators(analytics.routeClick, dispatch),
-        switchSelect: bindActionCreators(analytics.switchClick, dispatch)
-    };
-};
-
-export default connect(stateMap, mapDispatchToProps)(StartScreen);
+export default StartScreen;

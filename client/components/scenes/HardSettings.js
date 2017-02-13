@@ -6,12 +6,10 @@ import {
   Button,
   View
 } from 'react-native';
-import BleManager from 'react-native-ble-manager';
 
 class HardSettings extends Component {
   constructor(props){
-    super(props);
-    BleManager.start({showAlert: false});
+      super(props);
   }
   onButtonPress(){
       Actions.hardSettings();
