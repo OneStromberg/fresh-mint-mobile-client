@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Button } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { Route } from './../../constants';
+import { navigation } from './../../actions';
 
 class StartScreen extends Component {
     constructor() {
@@ -9,7 +11,7 @@ class StartScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button title='Device' onPress={Actions.deviceInfo}/>
+                <Button title='Device' onPress={() => this.props.go(Route.DeviceInfo)}/>
             </View>
         );
     }
@@ -23,4 +25,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default StartScreen;
+function mapDispatchToProps(dispatch) {
+    return {
+        go: bindActionCreators(navigation.go, dispatch)
+    };
+};
+
+
+export default connect(null, mapDispatchToProps)(StartScreen);

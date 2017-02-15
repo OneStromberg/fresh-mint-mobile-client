@@ -1,12 +1,9 @@
-import React, {Component} from 'react';
-import {
-    Text,
-    View,
-    StyleSheet
-} from 'react-native';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {bluetooth} from './../actions';
+import React, { Component } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {bluetooth, navigation } from './../../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +19,7 @@ class DeviceInfo extends Component {
             <View style={styles.container}>
                 <Text>Device name:</Text>
                 <Button title='Device' onPress={this.props.scan}/>
+                <Button title='Back' onPress={this.props.back}/>
             </View>
         )
     }
@@ -29,7 +27,8 @@ class DeviceInfo extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        scan: bindActionCreators(bluetooth.scan, dispatch)
+        scan: bindActionCreators(bluetooth.scan, dispatch),
+        back: bindActionCreators(navigation.back, dispatch)
     };
 };
 

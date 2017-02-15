@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import Application from './components';
+import AppRouter from './components';
+
+import { Provider } from 'react-redux';
+
+import Store from './reducers'
 
 class MobileClient extends Component {
   render() {
-    return <Application />
+    
+    return <Provider store={Store}>
+              <AppRouter />
+            </Provider>
   }
 }
 
