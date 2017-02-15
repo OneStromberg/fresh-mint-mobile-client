@@ -5,6 +5,8 @@ import {
 import BleManager from 'react-native-ble-manager';
 import {Buffer} from 'buffer';
 
+var scanning = -1;
+
 const CharacteristicUUID = {
     List: '34CD'
 }
@@ -42,11 +44,18 @@ const handleDiscoverPeripheral = (data) => {
     }
 }
 
-export const scan = () => {
-    return (dispatch) => {
+export const scan = (enable) => {
+
+    const _scan = () => {
         BleManager.scan([], 30, true).then((results) => {
             console.log('Scanning...');
         });
+    }
+
+    if (enable) {
+        scanning = setInterval(_scan, 3000);
+    } else {
+        clearInterval(scanning);
     }
 }
 
