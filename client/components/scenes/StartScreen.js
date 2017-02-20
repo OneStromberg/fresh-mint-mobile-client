@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Route } from './../../constants';
 import { navigation } from './../../actions';
+import { bindActionCreators } from 'redux';
 
 class StartScreen extends Component {
     constructor() {

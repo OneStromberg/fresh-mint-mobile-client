@@ -6,7 +6,11 @@ import {StartScreen, HardSettings, DeviceInfo} from './scenes';
 class AppRouter extends Component {
     render() {
         return  <Router>
-                    <Scene key="root">
+                    <Scene hideNavBar 
+                           panHandlers={null}
+                           duration={1} 
+                           key="root">
+
                         <Scene key={Route.StartScreen} component={StartScreen} title="StartScreen" initial={true}/>
                         <Scene key={Route.HardSettings} component={HardSettings} title="HardSettings"/>
                         <Scene key={Route.DeviceInfo} component={DeviceInfo} title="DeviceInfo"/>

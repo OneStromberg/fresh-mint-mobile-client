@@ -1,6 +1,10 @@
-export const BleManagerDidUpdateValueForCharacteristic          = 'BleManagerDidUpdateValueForCharacteristic';
-export const BleManagerDiscoverPeripheral                       = 'BleManagerDiscoverPeripheral';
-export const BleManagerDisconnectPeripheral                     = 'BleManagerDisconnectPeripheral';
-export const BleManagerConnectPeripheral                        = 'BleManagerConnectPeripheral';
-export const BleManagerStopScan                                 = 'BleManagerStopScan';
-export const BleManagerOnDeviceConnected                        = 'BleManagerOnDeviceConnected';
+export const DidUpdateValueForCharacteristic          = 'BleManagerDidUpdateValueForCharacteristic';
+export const DiscoverPeripheral                       = 'BleManagerDiscoverPeripheral';
+export const DisconnectPeripheral                     = 'BleManagerDisconnectPeripheral';
+export const ConnectPeripheral                        = 'BleManagerConnectPeripheral';
+export const StopScan                                 = 'BleManagerStopScan';
+export const OnDeviceConnected                        = 'BleManagerOnDeviceConnected';
+export const OnScan                                   = 'BleManagerOnScan';
+export const OnStart                                  = 'BleManagerOnStart';
+export const OnRead                                   = 'BleManagerOnRead';
+export const OnWrite                                  = 'BleManagerOnWrite';

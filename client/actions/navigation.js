@@ -1,25 +1,28 @@
 import { Actions as ActionsTypes, Route } from './../constants';
 import { Actions } from 'react-native-router-flux';
 
-export const back = (key) => {
+export const back = () => {
     Actions.pop();
+    return {
+        type: ActionsTypes.Navigation.NavigationChanged
+    };
 }
 
 export const go = (key) => {
     return (dispatch) => {
         switch(key){
             case Route.StartScreen:
-                Actions.StartScreen();
+                Actions.startScreen();
             break;
             case Route.HardSettings:
-                Actions.HardSettings();
+                Actions.hardSettings();
             break;
             case Route.DeviceInfo:
-                Actions.DeviceInfo();
+                Actions.deviceInfo();
             break;
         }
         dispatch({
-            types: ActionsTypes.Navigation.NavigationChanged,
+            type: ActionsTypes.Navigation.NavigationChanged,
             key: key
         })
     }

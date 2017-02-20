@@ -12,4 +12,6 @@ function configureStore() {
     return createStore(combinedReducers, applyMiddleware(thunk));
 }
 
-export default const Store = configureStore();
+const Store = configureStore();
+
+export default Store;
