@@ -8,22 +8,30 @@ export const back = () => {
     };
 }
 
+export const checkPeripheralInfo = (peripheralInfo) => {
+    if (peripheralInfo){
+        return Actions[Route.ModuleSettings];
+    }
+
+    return Actions[Route.BleDevicesList];
+}
+
 export const go = (key) => {
     return (dispatch) => {
-        switch(key){
-            case Route.StartScreen:
-                Actions.startScreen();
-            break;
-            case Route.HardSettings:
-                Actions.hardSettings();
-            break;
-            case Route.DeviceInfo:
-                Actions.deviceInfo();
-            break;
-        }
         dispatch({
             type: ActionsTypes.Navigation.NavigationChanged,
             key: key
         })
+        switch(key){
+            case Route.StartScreen:
+                return Actions[Route.StartScreen];
+            break;
+            case Route.ModuleSettings:
+                return checkPeripheralInfo;
+            break;
+            case Route.BleDevicesList:
+                return checkPeripheralInfo;
+            break;
+        }
     }
 }

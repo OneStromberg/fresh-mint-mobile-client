@@ -8,15 +8,13 @@ import {bluetooth, navigation } from './../../actions';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 10,
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'center'
     }
 });
 
-class DeviceInfo extends Component {
-    componentDidMount(){
-        this.props.enable();
-    }
+class BleDevicesList extends Component {
     render() {
         return (
             <View style={styles.container}>
@@ -45,4 +43,4 @@ function mapDispatchToProps(dispatch) {
     };
 };
 
-export default connect(stateMap, mapDispatchToProps)(DeviceInfo);
+export default connect(stateMap, mapDispatchToProps)(BleDevicesList);

@@ -1,9 +1,12 @@
 import { Actions } from './../constants';
 
 let initialState = {
-    list: null,
+    list: {},
     scanning: false,
-    peripheralInfo: null
+    peripheralInfo: null,
+    messages: {
+        
+    }
 };
 
 export default function bluetooth(state = initialState, action) {
@@ -12,13 +15,14 @@ export default function bluetooth(state = initialState, action) {
             console.log('ConnectPeripheral', action);
             break;
         case Actions.Bluetooth.DidUpdateValueForCharacteristic:
+            break;
         case Actions.Bluetooth.DisconnectPeripheral:
             state = {...state, peripheralInfo: null}
             break;
         case Actions.Bluetooth.DiscoverPeripheral:
         
             if (action.data && action.data.name) {
-                var o = {};
+                var o = state.list;
                 o[action.data.id] = action.data;
                 state = Object.assign({}, state, {
                     list: o
@@ -27,6 +31,23 @@ export default function bluetooth(state = initialState, action) {
 
             break;
         case Actions.Bluetooth.StopScan:
+            break;
+        case Actions.Bluetooth.OnRead:
+
+            let characteristicUUID = action.characteristic;
+            let messages = state.messages;
+            let charMessages = [];
+
+            if (messages[characteristicUUID]) {
+                charMessages = messages[characteristicUUID];
+            }
+
+            charMessages.push(action.data);
+
+            messages[characteristicUUID] = charMessages;
+
+            state = {...state, messages: messages}
+            break;
         case Actions.Bluetooth.OnDeviceConnected:
             console.log('bluetooth', action);
             state = {...state, peripheralInfo: action.peripheralInfo}

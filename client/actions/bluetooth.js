@@ -1,8 +1,9 @@
 import { NativeAppEventEmitter } from 'react-native';
 import BleManager from 'react-native-ble-manager';
-import { Actions, Route } from './../constants';
+import { Actions, Route, Board } from './../constants';
 import * as navigation from './navigation';
 import {Buffer} from 'buffer';
+import _ from 'lodash';
 
 var _scanTimeout = -1;
 
@@ -12,6 +13,16 @@ const CharacteristicUUID = {
 
 const ServiceUUID = {
     WiFi: '12AB'
+}
+
+const deserialize = (readData) => {
+    let buffer = Buffer.from(readData, 'hex');
+    let message =  buffer.toString('utf-8');
+    let packages = message.split(',');
+    let packageSize = packages[0];
+    let packageBody = _.takeRight(packages, packages.length - 1);
+    let unzippedResult = _.chunk(packageBody, packageSize);
+    return _.zipObject(...unzippedResult);
 }
 
 export const subscribe = () => {
@@ -110,26 +121,33 @@ export const read = (peripheralId, serviceUUID, characteristicUUID) => {
     return (dispatch) => {
         BleManager.read(peripheralId, serviceUUID, characteristicUUID)
             .then((readData) => {
-                var buffer = Buffer.from(readData, 'hex');
-                console.log('readData: ' + buffer);
+
+                BleManager.checkState();
+                let result = deserialize(readData);
+
                 dispatch({
                     type:           Actions.Bluetooth.OnRead,
                     service:        serviceUUID,
                     characteristic: characteristicUUID,
-                    data:           readData
+                    data:           result
                 });
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error, peripheralId, serviceUUID, characteristicUUID);
             });
     }
 }
 
-export const write = (peripheralId, serviceUUID, characteristicUUID, data) => {
+export const writeWithoutResponse = (peripheralId, serviceUUID, characteristicUUID, data) => {
     return (dispatch) => {
-        var buffer = Buffer.from([1]);
-        BleManager.write(peripheralId, serviceUUID, characteristicUUID, buffer)
+
+        var req = [data.pin, data.value];
+        let buffer = Buffer.from(req.toString(), 'utf8');
+        let message = buffer.toString('base64');
+
+        BleManager.writeWithoutResponse(peripheralId, serviceUUID, characteristicUUID,  )
             .then((callback) => {
+                BleManager.checkState();
                 dispatch({
                     type:           Actions.Bluetooth.OnWrite,
                     service:        serviceUUID,
@@ -138,7 +156,29 @@ export const write = (peripheralId, serviceUUID, characteristicUUID, data) => {
                 });
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error, peripheralId, serviceUUID, characteristicUUID);
+            });
+    }
+}
+
+export const write = (peripheralId, serviceUUID, characteristicUUID, data) => {
+    return (dispatch) => {
+
+        var req = [data.pin, data.value];
+        let buffer = Buffer.from(req.toString(), 'utf8');
+        let message = buffer.toString('base64');
+        BleManager.write(peripheralId, serviceUUID, characteristicUUID, message )
+            .then((callback) => {
+                BleManager.checkState();
+                dispatch({
+                    type:           Actions.Bluetooth.OnWrite,
+                    service:        serviceUUID,
+                    characteristic: characteristicUUID,
+                    data:           data
+                });
+            })
+            .catch((error) => {
+                console.log(error, peripheralId, serviceUUID, characteristicUUID);
             });
     }
 }
@@ -151,7 +191,7 @@ export const connect = (id) => {
                     type: Actions.Bluetooth.OnDeviceConnected,
                     peripheralInfo: peripheralInfo
                 });
-                dispatch(navigation.go(Route.HardSettings));
+                dispatch(navigation.go(Route.ModuleSettings));
             })
             .catch((error) => {
                 // Failure code

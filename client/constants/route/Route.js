@@ -1,3 +1,3 @@
-export const StartScreen = 'startScreen';
-export const HardSettings = 'hardSettings';
-export const DeviceInfo = 'deviceInfo';
+export const StartScreen = 'start_screen';
+export const ModuleSettings = 'module_settings';
+export const BleDevicesList = 'device_list';

@@ -24,7 +24,10 @@ class HardSettings extends Component {
   render() {
 
       if (this.props.peripheralInfo === null) {
-            return <Text>Disconnecting...</Text>
+            return <View style={styles.container}>
+                        <Text>Disconnecting...</Text>
+                        <Button onPress={Actions.pop} title="Back"/>
+                    </View>
       }
 
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});

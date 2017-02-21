@@ -1,5 +1,5 @@
-import HardSettings from './HardSettings';
+import ModuleSettings from './ModuleSettings';
 import StartScreen from './StartScreen';
-import DeviceInfo from './DeviceInfo';
+import BleDevicesList from './BleDevicesList';
 
-export {HardSettings, StartScreen, DeviceInfo}
+export {ModuleSettings, StartScreen, BleDevicesList}

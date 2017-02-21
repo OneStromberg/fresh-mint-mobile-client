@@ -17,6 +17,4 @@ PROBLEMS ON START
 cd android
 sudo /.grandlew clean
 
-
-
 adb reverse tcp:8081 tcp:8081

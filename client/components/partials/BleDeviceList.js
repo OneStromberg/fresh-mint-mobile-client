@@ -10,9 +10,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    alignSelf: 'stretch'
   },
   itemRenderer: {
-      flex: 1
+      flex: 1,
+      flexDirection:'row'
+  },
+  message: {
+      textAlign: 'center'
   }
 });
 
@@ -34,9 +39,11 @@ class BleDeviceList extends Component {
 
         return (
             <View style={styles.container}>
-                {this.props.list ? <ListView dataSource={ds.cloneWithRows(this.props.list)}
+                {this.props.list.length > 0 ? <ListView dataSource={ds.cloneWithRows(this.props.list)}
                                              renderRow={this.renderButtonList.bind(this)}/>
-                        : <Text>{this.props.scanning ? 'no devices nearby' : 'run scan to find devices' }</Text>}
+                        : <Text style={styles.message}>
+                            {this.props.scanning ? 'no devices nearby' : `First you should find your module\nPress search button to toggle searching` }
+                        </Text>}
             </View>
         )
     }
@@ -44,8 +51,7 @@ class BleDeviceList extends Component {
 
 const stateMap = (state, props, ownProps) => {
     return {
-        scanning: state.componentSettings.bluetooth.scanning,
-        list: state.componentSettings.bluetooth.list
+        list: Object.values(state.componentSettings.bluetooth.list)
     };
 };
 
